@@ -104,20 +104,9 @@ def ex_2_a(x_train, y_train, x_test, y_test):
     SVMlin.fit(x_train, y_train)
     scorelin = SVMlin.score(x_test, y_test)
 
-    SVMpoly = svm.SVC(kernel="poly")
-    SVMpoly.fit(x_train, y_train)
-    scorepoly = SVMpoly.score(x_test, y_test)
-
-    SVMrbf = svm.SVC(kernel="rbf")
-    SVMrbf.fit(x_train, y_train)
-    scorerbf = SVMrbf.score(x_test, y_test)
-
-
     plot_svm_decision_boundary(SVMlin, x_train, y_train, x_test, y_test)
-    plot_svm_decision_boundary(SVMpoly, x_train, y_train, x_test, y_test)
-    plot_svm_decision_boundary(SVMrbf, x_train, y_train, x_test, y_test)
 
-    print('Linear score',scorelin, 'Poly score', scorepoly, 'RBF score', scorerbf)
+    print('Linear score', scorelin)
 
     pass
 
@@ -140,18 +129,21 @@ def ex_2_b(x_train, y_train, x_test, y_test):
     ## using 'plot_svm_decision_boundary' function
     ###########
     degrees = range(1, 20)
-    scorepolylist = np.zeros(np.array(degrees).shape[0])
+    scorepolylist_test = np.zeros(np.array(degrees).shape[0])
+    scorepolylist_train = np.zeros(np.array(degrees).shape[0])
     for deg in degrees:
         SVMpoly = svm.SVC(kernel='poly', coef0=1, degree=deg)
         SVMpoly.fit(x_train, y_train)
-        scorepolylist[deg-1] = SVMpoly.score(x_test, y_test)
+        scorepolylist_test[deg-1] = SVMpoly.score(x_test, y_test)
+        scorepolylist_train[deg - 1] = SVMpoly.score(x_train, y_train)
 
-    max_score_index = np.argmax(scorepolylist)
+    max_score_index = np.argmax(scorepolylist_test)
     optimal_deg = max_score_index+1
     SVMpolyopt = svm.SVC(kernel='poly', coef0=1, degree=optimal_deg)
     SVMpolyopt.fit(x_train, y_train)
+    plot_score_vs_degree(scorepolylist_train, scorepolylist_test, degrees)
     plot_svm_decision_boundary(SVMpolyopt, x_train, y_train, x_test, y_test)
-    print("Optimal degree", optimal_deg, "Optimal score", scorepolylist[max_score_index])
+    print("Optimal degree", optimal_deg, "Optimal score", scorepolylist_test[max_score_index])
 
 
 
@@ -187,7 +179,6 @@ def ex_2_c(x_train, y_train, x_test, y_test):
 
     SVMrbf_opt = svm.SVC(kernel="rbf", gamma=opt_gamma)
     SVMrbf_opt.fit(x_train, y_train)
-
     plot_svm_decision_boundary(SVMrbf_opt, x_train, y_train, x_test, y_test)
     print("Optimal gamma", opt_gamma, "Optimal score", test_score[max_score_index])
     plot_score_vs_gamma(train_score, test_score, gammas)

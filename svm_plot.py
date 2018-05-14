@@ -55,7 +55,7 @@ def plot_data_points(x_train, y_train, x_test=None, y_test=None):
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
 
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(6, 6))
     ax = plt.subplot()
 
     # Plot the training points
@@ -106,7 +106,7 @@ def plot_svm_decision_boundary(svm, x_train, y_train, x_test=None, y_test=None):
 
     Z = svm.decision_function(np.c_[xx.ravel(), yy.ravel()])
 
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(6, 6))
     ax = plt.subplot()
 
     # Put the result into a color plot
@@ -138,7 +138,7 @@ def plot_score_vs_degree(train_scores, test_scores, poly_degree_list):
     :param poly_degree_list: List containing degrees of the polynomials corresponding to each of the scores.
     :return:
     """
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(9, 6))
     plt.title("Variation of testing and training scores with polynomial degrees")
     plt.plot(poly_degree_list, train_scores, 'o', linestyle='-', label="Training scores", lw=2)
     plt.plot(poly_degree_list, test_scores, 'o', linestyle='-', label="Testing scores", lw=2)
@@ -159,7 +159,7 @@ def plot_score_vs_gamma(train_scores, test_scores, gamma_list, lin_score_train=-
     :param baseline: Baseline score for the problem
     :return:
     """
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(9, 6))
     plt.title("Variation of testing and training scores with gamma")
     plt.semilogx(gamma_list, train_scores, 'o', linestyle='-', label="Training scores", color='blue', lw=2)
     plt.semilogx(gamma_list, test_scores, 'o', linestyle='-', label="Testing scores", color='green', lw=2)
